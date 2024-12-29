@@ -1,9 +1,10 @@
 #lang racket
 
-(require "encoder-sig.rkt")
-(require "marshaller-sig.rkt")
-(require "incodec-sig.rkt")
+(require "encoder-sig.rkt"
+         "marshaller-sig.rkt"
+         "incodec-sig.rkt")
 
+; TODO (values in-code)?
 (define-unit incodec@
   (import encoder^ marshaller^)
   (export incodec^)

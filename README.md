@@ -63,12 +63,17 @@ Example usage:
 
 ## Name conflicts
 
-If you need several of these, you might run into an issue where a name would conflict between them.
-You can simple create a new scope to let the name escape:
+The `export` clause can be used to `prefix` or `rename`:
 
 ```racket
-(define vector-to-json
-  (let ()
-    (define-values/invoke-unit/infer ...)
-    in-code))
+; using `prefix`:
+(define-values/invoke-unit/infer
+  (export (prefix snd- incodec^))
+  (link encoder-json@ marshaller-vector@ incodec@))
+(snd-in-code (vector 1 2 3))
+; using `rename`:
+(define-values/invoke-unit/infer
+  (export (rename incodec^ (in-code-again in-code)))
+  (link encoder-json@ marshaller-vector@ incodec@))
+(in-code-again (vector 1 2 3))
 ```
