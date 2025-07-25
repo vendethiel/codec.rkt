@@ -23,6 +23,17 @@ Example usage of simple JSON encoding (it requires the value to be encoded to be
 
 ### Decoder
 
+The decodes provides a `decode` function that takes a value and reads it from a specific format.
+
+Example usage of simple JSON decoding:
+
+```
+(require "decoder-json.rkt")
+
+(define-values/invoke-unit/infer decoder-json@)
+(decode "[1,2,3]")
+```
+
 ### Marshaller
 
 The marshaller provides a `marshall` function that takes a value and converts it to a simple Racket value (usually, `jsexpr?`-compatible).
@@ -37,6 +48,17 @@ Example usage (`vector`s aren't `jsexpr?`):
 ```
 
 ### Unmarshaller
+
+The unmarshaller provides a `unmarshall` function that takes a simple (usually, `jsexpr?`-compatible) Racket value and converts it to its original form.
+
+Example usage (`list`s are `jsexpr?`):
+
+```racket
+(require "unmarshaller-vector.rkt")
+
+(define-values/invoke-unit/infer unmarshaller-vector@)
+(print unmarshall (list 1 2 3))
+```
 
 ### InCodec
 
@@ -58,6 +80,8 @@ Example usage:
 ```
 
 ### OutCodec
+
+When you have
 
 ### Codec
 
