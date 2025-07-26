@@ -60,9 +60,24 @@ Example usage (`list`s are `jsexpr?`):
 (print unmarshall (list 1 2 3))
 ```
 
-### InCodec
+### ReadCodec
 
-When you have an encoder and a marshaller, you can use an `incodec`.
+When you have an encoder and a marshaller, you can use a `readcodec`.
+You just need to `link` an `unmarshaller` and a `decoder`.
+
+Example usage:
+
+```racket
+
+(define-values/invoke-unit/infer
+  (export readcodec^)
+  (link decoder-json@ unmarshaller-vector@ readcodec@))
+(print (codec-read "[1,2,3]"))
+```
+
+### WriteCodec
+
+When you have an encoder and a marshaller, you can use a `writecodec`.
 You just need to `link` an `encoder` and a `marshaller`.
 
 Example usage:
@@ -71,17 +86,13 @@ Example usage:
 (require "incodec-sig.rkt")
 (require "encoder-json.rkt")
 (require "marshaller-vector.rkt")
-(require "incodec-unit.rkt")
+(require "writecodec-unit.rkt")
 
 (define-values/invoke-unit/infer
-  (export incodec^)
-  (link encoder-json@ marshaller-vector@ incodec@))
-(in-code (vector 1 2 3))
+  (export writecodec^)
+  (link encoder-json@ marshaller-vector@ writecodec@))
+(codec-write (vector 1 2 3))
 ```
-
-### OutCodec
-
-When you have
 
 ### Codec
 
@@ -101,3 +112,5 @@ The `export` clause can be used to `prefix` or `rename`:
   (link encoder-json@ marshaller-vector@ incodec@))
 (in-code-again (vector 1 2 3))
 ```
+
+**Note**: If you do *not* specify an `export` clause, all units are invoked in the current scoped, and thus the `encode`/`decode`/`marshall`/`unmarshall` names are leaked into your current scopes as well.
