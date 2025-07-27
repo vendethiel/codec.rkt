@@ -96,6 +96,18 @@ Example usage:
 
 ### Codec
 
+A codec is simply a combination of a `ReadCodec` and a `WriteCodec`.
+It is not something that exists as a unit, but rather a way to get both in your code.
+
+You only need to specify both in `export` and augment your `link` clause in the unit invocation:
+
+```racket
+(define-values/invoke-unit/infer
+  (export readcodec^ writecodec^)
+  (link decoder-json@ unmarshaller-vector@ readcodec@
+        encoder-json@ marshaller-vector@ writecodec@))
+```
+
 ## Name conflicts
 
 The `export` clause can be used to `prefix` or `rename`:
