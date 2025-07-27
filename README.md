@@ -70,8 +70,8 @@ Example usage:
 ```racket
 
 (define-values/invoke-unit/infer
-  (export readcodec^)
-  (link decoder-json@ unmarshaller-vector@ readcodec@))
+  (link decoder-json@ unmarshaller-vector@ readcodec@)
+  (export readcodec^))
 (print (codec-read "[1,2,3]"))
 ```
 
@@ -89,8 +89,8 @@ Example usage:
 (require "writecodec-unit.rkt")
 
 (define-values/invoke-unit/infer
-  (export writecodec^)
-  (link encoder-json@ marshaller-vector@ writecodec@))
+  (link encoder-json@ marshaller-vector@ writecodec@)
+  (export writecodec^))
 (codec-write (vector 1 2 3))
 ```
 
@@ -103,9 +103,9 @@ You only need to specify both in `export` and augment your `link` clause in the 
 
 ```racket
 (define-values/invoke-unit/infer
-  (export readcodec^ writecodec^)
   (link decoder-json@ unmarshaller-vector@ readcodec@
-        encoder-json@ marshaller-vector@ writecodec@))
+        encoder-json@ marshaller-vector@ writecodec@)
+  (export readcodec^ writecodec^))
 ```
 
 ## Name conflicts
@@ -115,13 +115,13 @@ The `export` clause can be used to `prefix` or `rename`:
 ```racket
 ; using `prefix`:
 (define-values/invoke-unit/infer
-  (export (prefix snd- incodec^))
-  (link encoder-json@ marshaller-vector@ incodec@))
+  (link encoder-json@ marshaller-vector@ incodec@)
+  (export (prefix snd- incodec^)))
 (snd-in-code (vector 1 2 3))
 ; using `rename`:
 (define-values/invoke-unit/infer
-  (export (rename incodec^ (in-code-again in-code)))
-  (link encoder-json@ marshaller-vector@ incodec@))
+  (link encoder-json@ marshaller-vector@ incodec@)
+  (export (rename incodec^ (in-code-again in-code))))
 (in-code-again (vector 1 2 3))
 ```
 
